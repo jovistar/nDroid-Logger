@@ -1,0 +1,6 @@
+[common]
+mode = LOGPRINT
+logFile = log.log
+
+[com]
+port = 12322
