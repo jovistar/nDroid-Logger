@@ -1,5 +1,5 @@
 [common]
-mode = LOGPRINT
+mode = PRINTONLY
 logFile = log.log
 
 [com]

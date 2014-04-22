@@ -10,13 +10,18 @@ class LogManager():
 	def __init__(self, logMode, logFile):
 		self.logFile = open(logFile, 'w')
 
-		if logMode in ['LOGONLY', 'LOGPRINT']:
-			if logMode == 'LOGONLY':
-				self.logPrint = False
-			elif logMode == 'LOGPRINT':
-				self.logPrint = True
-		else:
-			self.logPrint = False
+		if logMode not in ['LOGONLY', 'LOGPRINT', 'PRINTONLY']:
+			logMode = 'PRINTONLY'
+
+		if logMode == 'LOGONLY':
+			self.doLog = True
+			self.doPrint = False
+		if logMode == 'LOGPRINT':
+			self.doLog = True
+			self.doPrint = True
+		if logMode == 'PRINTONLY':
+			self.doLog = False
+			self.doPrint = True
 
 		#multithread
 		self.lock = threading.Lock()
@@ -38,9 +43,11 @@ class LogManager():
 	def writeLog(self, msg):
 		self.lock.acquire()
 
-		if self.logPrint:
+		if self.doPrint == True:
 			print msg
 
-		self.logFile.write(msg + '\n')
+		if self.doLog == True:
+			self.logFile.write(msg + '\n')
+
 		self.lock.release()
 
